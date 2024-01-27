@@ -1,9 +1,28 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { FaShopify } from "react-icons/fa";
 import { RiAdminLine } from "react-icons/ri";
+import { login,logout,onUserStateChange} from '../api/firebase';
 
 export default function Navbar() {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
+  }, []);
+
+
+  const handleLogin = () => {
+    login().then(setUser);
+  };
+  const handleLogout = () => {
+    logout().then(setUser);
+  };
+
+
   return (
     <header>
       <Link to='/'>
@@ -16,7 +35,8 @@ export default function Navbar() {
         <Link to='/products/new'>
           <RiAdminLine />
         </Link>
-        <button>Login</button>
+        {!user && <button onClick={handleLogin}>Login</button>}
+        {user && <button onClick={handleLogout}>Logout</button>}
       </nav>
     </header>
   );
