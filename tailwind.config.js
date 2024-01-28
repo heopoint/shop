@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: '#333',
+        brand: '#0969DA',
       },
       maxWidth: {
         '1260': '1260px',
