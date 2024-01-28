@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import Button from '../components/ui/Button';
  
 import { uploadImage } from '../api/uploader';
+<<<<<<< HEAD
 import useProducts from '../hooks/useProducts';
+=======
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+>>>>>>> 19113f22cb15c89d3d6a3f8da12de076b81a0486
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -10,7 +14,19 @@ export default function NewProduct() {
 
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+<<<<<<< HEAD
   const { addProduct } = useProducts();
+=======
+// -------------------------------------
+const queryClient = useQueryClient();
+
+const addProduct = useMutation(
+  ({ product, url }) => addNewProduct(product, url),
+  {
+    onSuccess: () => queryClient.invalidateQueries(['products']),
+  }
+);
+>>>>>>> 19113f22cb15c89d3d6a3f8da12de076b81a0486
 // -------------------------------------
 
   const handleChange = (e) => {
