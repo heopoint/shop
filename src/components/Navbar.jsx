@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className='max-w-1260 mx-auto flex justify-between'>
       <Link to='/' className='flex items-center text-4xl text-brand'>
         <FaShopify />
-        <h1>Shoppy</h1>
+        <img src="/images/logo.png" alt="Shoppy logo" style={{ width: '150px',  }} />
       </Link>
         <nav className='flex items-center   font-semibold'>
           {!user && (
