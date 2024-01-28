@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, signInWithPopup, GoogleAuthProvider ,  signOut,  onAuthStateChanged,} from 'firebase/auth'
-import { getDatabase, ref, child, get } from 'firebase/database';
-
+import { getDatabase, ref, set, get } from 'firebase/database';
+import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,11 +12,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-// ------------------------------
+// -----------------------------------------
 const auth = getAuth()
 const provider = new GoogleAuthProvider()
 const database = getDatabase(app);
-
+// ---------------------------------------------
 export  function login() {
    signInWithPopup(auth, provider)
     .catch(console.error);
@@ -25,7 +25,7 @@ export  function login() {
 export  function logout() {
    signOut(auth).catch(console.error);
 }
-
+// ---------------------------------------------
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth,async (user) => {
     // 1.사용자가 있는 경우에(로그인한경우)
@@ -35,7 +35,7 @@ export function onUserStateChange(callback) {
     callback(updatedUser);
   });
 }
-
+// ---------------------------------------------
 async function adminUser(user) {
   //  2.사용자가 어드민 권한을 가지고 있는지 확인
   //  3.{user, isAdmin/true/false}
@@ -49,4 +49,15 @@ async function adminUser(user) {
       }
       return user;
     });
+}
+// ---------------------------------------------
+export async function addNewProduct(product, image) {
+  const id = uuid();
+  return set(ref(database, `products/${id}`), {
+    ...product,
+    id,
+    price: parseInt(product.price),
+    image,
+    options: product.options.split(','),
+  });
 }
