@@ -89,9 +89,10 @@ export default function NewProduct() {
           required
           onChange={handleChange}
         />
-        <input
-          type='textarea'
+      <textarea
+       className='h-24'
           name='description'
+         
           value={product.description ?? ''}
           placeholder='제품 설명'
           required
